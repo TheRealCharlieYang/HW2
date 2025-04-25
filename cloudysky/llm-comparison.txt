@@ -1,0 +1,5 @@
+There are few, key, small differences that stood out to me when comparing my hand-written data model the ChatGPT o4 generated version. One thing the AI did better was adding auto_now_add=True to the created_at fields in the Post, Comment, and Media tables. That makes sense because it means I won’t have to manually insert timestamps every time a record is created. It also included a suppression_reason field for posts and comments, which I overlooked but is actually required by the spec to show users why their content was removed. The AI version also splits out SuppressionReason into its own table. That separate lookup table is nice for consistency and easier updates if you ever want to add or change the list of reasons
+
+I think my version captured the essential structure well. It is in a sense more minimal and readable to my own coding level. However, the AI version is just more feature-complete. 
+
+
