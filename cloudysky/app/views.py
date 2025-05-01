@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 
 from django.http import HttpResponse
@@ -8,6 +9,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     # 1) build a simple bio list
@@ -28,7 +30,7 @@ def new_user_form(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
     return render(request, 'app/new_user.html')
-
+@csrf_exempt
 def create_user(request):
     if request.method != 'POST':
         return HttpResponseBadRequest("POST required")

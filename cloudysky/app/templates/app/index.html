@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home</title>
-  <style> body { text-align: center; font-family: sans-serif; } </style>
+  <title>Team Bio</title>
+  <style>
+    body { text-align: center; font-family: sans-serif; }
+  </style>
 </head>
 <body>
   <h1>Team Bio</h1>
+
   {% for person in bio %}
-    {% if person.name == current_user.get_full_name %}
-      <p><strong style="background: yellow">{{ person.name }}</strong> — {{ person.role }}</p>
-    {% else %}
-      <p>{{ person.name }} — {{ person.role }}</p>
-    {% endif %}
+    <p>{{ person.name }} — {{ person.role }}</p>
   {% endfor %}
 
   <hr>
+
   {% if current_user.is_authenticated %}
-    <p>Welcome, <strong>{{ current_user.username }}</strong>! (<a href="{% url …
+    <p>
+      Welcome, <strong>{{ current_user.username }}</strong>
+      (<strong>{{ current_user.email }}</strong>)
+      — <a href="{% url 'logout' %}">Log out</a>
+    </p>
   {% else %}
-    <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'app:new_user' %}">Sign up</a></p>
+    <p>
+      Not logged in. <a href="{% url 'login' %}">Log in</a>
+      or <a href="{% url 'app:new_user' %}">Sign up</a>
+    </p>
   {% endif %}
 
   <p>Current server time: {{ now }}</p>
