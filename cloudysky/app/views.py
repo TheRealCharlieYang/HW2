@@ -14,21 +14,25 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 
 def index(request):
-    # 1) build a simple bio list
     bio = [
         {'name': 'Charlie', 'role': 'Frontend'},
         {'name': 'Charlie', 'role': 'Backend'},
         {'name': 'Charlie', 'role': 'Design'},
     ]
-
-    # 2) current time as string (localized to your server TZ)
-    now = timezone.localtime().strftime("%H:%M")
-
+    # compute Central time
+    central = pytz.timezone("America/Chicago")
+    now = (
+        datetime.utcnow()
+        .replace(tzinfo=pytz.utc)
+        .astimezone(central)
+        .strftime("%Y-%m-%d %H:%M:%S")
+    )
     return render(request, 'app/index.html', {
         'bio': bio,
         'current_user': request.user,
         'now': now,
     })
+
 
 def new_user_form(request):
     if request.method != 'GET':
