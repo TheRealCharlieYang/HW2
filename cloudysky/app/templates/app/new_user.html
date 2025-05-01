@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+  <style> body { text-align: center; font-family: sans-serif; } </style>
+</head>
+<body>
+  <h1>Create a New Account</h1>
+  <form method="POST" action="{% url 'app:create_user' %}">
+    {% csrf_token %}
+    <p><label>Username: <input type="text" name="user_name" required></label></p>
+    <p><label>Email:    <input type="email" name="email" required></label></p>
+    <p><label>Password: <input type="password" name="password" required></label></p>
+    <p><label>Is Admin? <input type="checkbox" name="is_admin"></label></p>
+    <p><button type="submit">Sign Up</button></p>
+  </form>
+  <p><a href="{% url 'app:index' %}">Back to home</a></p>
+</body>
+</html>

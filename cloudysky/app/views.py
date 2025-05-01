@@ -3,6 +3,48 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
 import pytz
+from django.shortcuts import render
+from django.utils import timezone
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed
+
+def index(request):
+    # 1) build a simple bio list
+    bio = [
+        {'name': 'Charlie', 'role': 'Frontend'},
+        {'name': 'Charlie',   'role': 'Backend'},
+        {'name': 'Charlie', 'role': 'Design'},
+    ]
+    # 2) current time as string
+    now = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+    return render(request, 'app/index.html', {
+        'bio': bio,
+        'current_user': request.user,
+        'now': now,
+    })
+
+def new_user_form(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])
+    return render(request, 'app/new_user.html')
+
+def create_user(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest("POST required")
+    username = request.POST.get('user_name')
+    email    = request.POST.get('email')
+    password = request.POST.get('password')
+    is_admin = request.POST.get('is_admin') == 'on'
+    # check duplicate
+    if User.objects.filter(email=email).exists():
+        return JsonResponse({'error': 'Email already taken'}, status=400)
+    # create & sign in
+    user = User.objects.create_user(username=username, email=email, password=password)
+    user.is_staff = is_admin
+    user.save()
+    login(request, user)
+    return JsonResponse({'message': 'User created successfully'})
 
 def dummypage(request):
     return HttpResponse("No content here, sorry!")
