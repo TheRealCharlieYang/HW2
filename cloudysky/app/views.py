@@ -1,4 +1,4 @@
-
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 
 from django.http import HttpResponse
@@ -19,7 +19,7 @@ def index(request):
         {'name': 'Charlie', 'role': 'Design'},
     ]
     # 2) current time as string
-    now = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = timezone.now().strftime("%H:%M")
     return render(request, 'app/index.html', {
         'bio': bio,
         'current_user': request.user,
