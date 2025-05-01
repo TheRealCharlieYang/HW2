@@ -16,7 +16,7 @@
 
   <hr>
   {% if current_user.is_authenticated %}
-    <p>Welcome, <strong>{{ current_user.username }}</strong>! (<a href="{% url 'logout' %}">Logout</a>)</p>
+    <p>Welcome, <strong>{{ current_user.username }}</strong>! (<a href="{% url …
   {% else %}
     <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'app:new_user' %}">Sign up</a></p>
   {% endif %}

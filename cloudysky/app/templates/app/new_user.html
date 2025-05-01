@@ -11,9 +11,11 @@
     <p><label>Username: <input type="text" name="user_name" required></label></p>
     <p><label>Email:    <input type="email" name="email" required></label></p>
     <p><label>Password: <input type="password" name="password" required></label></p>
-    <p><label>Is Admin? <input type="checkbox" name="is_admin"></label></p>
+    <p>Is Admin?</p>
+    <label><input type="radio" name="is_admin" value="1"> Yes</label>
+    <label><input type="radio" name="is_admin" value="0" checked> No</label>
     <p><button type="submit">Sign Up</button></p>
   </form>
-  <p><a href="{% url 'app:index' %}">Back to home</a></p>
+<p><a href="{% url 'root_index' %}">Back to home</a></p>
 </body>
 </html>

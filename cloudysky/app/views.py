@@ -35,8 +35,7 @@ def create_user(request):
     username = request.POST.get('user_name')
     email    = request.POST.get('email')
     password = request.POST.get('password')
-    is_admin = request.POST.get('is_admin') == 'on'
-    # check duplicate
+    is_admin = request.POST.get('is_admin') == '1'    # check duplicate
     if User.objects.filter(email=email).exists():
         return JsonResponse({'error': 'Email already taken'}, status=400)
     # create & sign in
